@@ -1,0 +1,88 @@
+/* ---------------------------------------------------------------------------------------------------------------- */
+                                            /*   BASIC SETUP */
+/* --------------------------------------------------------------------------------------------------------------- */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    background-color: rgb(17, 17, 17);
+    color: rgba(194, 194, 194, 0.527);
+    font-weight: 300;
+    font-family: serif, sans-serif;
+    font-size: 18px;
+    text-rendering: optimizeLegibility;
+}
+
+/* ---------------------------------------------------------------------------------------------------------------- */
+                                            /*   HEADER */
+/* --------------------------------------------------------------------------------------------------------------- */
+
+.header {
+    background-color: rgb(17, 17, 17);
+    height: 4rem;
+    padding: 1rem;
+}
+
+.header__main-text {
+    text-align: center;
+    letter-spacing: .5rem;
+}
+
+/* ---------------------------------------------------------------------------------------------------------------- */
+                                            /*   FORM ELEMENTS */
+/* --------------------------------------------------------------------------------------------------------------- */
+
+.section__form {
+    background-color: rgb(37, 37, 37);
+    height: 5rem;
+    text-align: center;
+}
+
+select,
+input,
+button {
+    color: rgb(17, 17, 17);
+    background-color: rgba(255, 255, 255, 0.808);
+    border-radius: .2rem;
+    border: 1px solid rgb(0, 0, 0);
+    padding: .3rem;
+    margin: 1.5rem;
+    font-size: .9rem;
+}
+
+.button {
+    background: rgba(255, 255, 255, 0.493);
+    border: 0;
+    padding: .5rem 1rem;
+    cursor: pointer;
+}
+
+textarea {
+    background-color: rgba(36, 36, 36, 0.301);
+    color: rgb(158, 158, 158);
+    margin: 0rem 1rem;
+    padding: .3rem;
+    width: 100%;
+    border: 0;
+    font-size: 1rem;
+}
+
+.text {
+    background-color: rgba(63, 63, 63, 0.301);
+    display: inline-block;
+    margin: 0rem .5rem;;
+    width: 100%;
+    height: 70vh;
+}
+
+.encrypted {
+    background-color: rgb(110, 110, 110);
+    width: 99%;
+    height: 70vh;
+    padding: .3rem;
+    overflow: scroll
+}

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="resources/stylesheets/main.css">
+    <link rel="stylesheet" href="vendors/stylesheets/grid.css">
+    <title>CIPHER</title>
+</head>
+<body>
+    <header class="header">
+        <h1 class="header__main-text">C1PH3R</h1>
+    </header>
+
+    <section class="section__form">
+
+        <select class="type">
+            <option value="vigenere" selected>VIGENERE</option>
+            <option value="OTP">OTP</option>
+        </select>
+
+        <input type="text" class="codeword" placeholder="codeword">
+
+        <select class="method">
+            <option value="encrypt" selected>ENCRYPT</option>
+            <option value="decrypt">DECRYPT</option>
+        </select>
+
+        <button class="button">GO<i class="ion-ios-checkmark-outline"></i></button>
+        
+    </section>
+
+    <!---------------------------------------------------------------------------------------------------------------- */
+    /*                          FORM ELEMENTS                                                                          */
+    /* --------------------------------------------------------------------------------------------------------------->
+
+    <section class="section__text">
+
+        <div class="col span-1-of-2">
+            <textarea class="text" name="text" id="text" cols="30" rows="10" placeholder="your text"></textarea>
+        </div>
+
+        <div class="col span-1-of-2">
+            <div class="encrypted"></div>
+        </div>
+
+    </section>
+    
+
+    <script src="resources/js/main.js"></script>
+</body>
+</html>
