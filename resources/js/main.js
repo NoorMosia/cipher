@@ -193,21 +193,40 @@ let cipherController = (function() {
             this.text = text;
         }
 
-        scramble(text)
+        scramble()
         {
             let newText = "";
-            
-            if (this.text.length % 2 !== 0)
+
+            let textarr = [];
+
+            for(let index = 0; index < this.text.length; index++)
             {
-                for (let i = 0; i < this.text.length; i++) {
-                    if (i % 2 !== 0) {
-                        newText += this.text[this.text.length - i - 1];
-                    } else {
-                        newText += this.text[i];
-                    }
+                textarr.push(this.text[index]);
+            }
+
+            let mid = parseInt(textarr.length / 2);
+            let holder;
+
+            if (textarr.length % 2 != 0) {
+                for (let i = 1; i < mid + 1; i += 2)
+                {
+                    holder = textarr[mid - i];
+                    textarr[mid - i] = textarr[mid + i];
+                    textarr[mid + i] = holder;
                 }
             }
-            
+            else {
+                for (let i = 0; i < mid ; i += 2)
+                {
+                    holder = textarr[mid - i - 1];
+                    textarr[mid - i - 1] = textarr[mid + i];
+                    textarr[mid + i] = holder;
+                }
+            }
+
+            for (let index = 0; index < this.text.length; index++) {
+                newText += textarr[index];
+            }
 
             return newText;
         }
@@ -216,44 +235,12 @@ let cipherController = (function() {
 
         unscramble(text)
         {
-            return scramble(text);
+            return this.scramble(text);
         }
 
     }
 
     // -------------------------COLUMNAR----------------------------------------------------------------//
-
-    class columnar extends transposition {
-        constructor(){}
-
-        permute()
-        {
-            let lent = codeword.length();
-
-            let permutation;
-
-            for (let i = 0; i < lent; i++)
-            {
-                permutation[i] = 0;
-                for (let j = 0; j < lent; j++)
-                {
-                    if (codeword[i] > codeword[j] && i != j) {
-                        permutation[i]++;
-                        for (let k = 0; k < j; k++)
-                        {
-                            if (codeword[k] == codeword[j] && i != j) {
-                                permutation[i]--;
-                                break;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-
-
     return {
         doVigenere: (text, codeword) => {
             let newObj = new vigenere(text, codeword); 
@@ -272,8 +259,12 @@ let cipherController = (function() {
             return newObj.decode();
         },
         doScramble: (text) => {
-            let newObj = new swapScramble(text)
-            return newObj.scramble(text);
+            let newObj = new swapScramble(text);
+            return newObj.scramble();
+        },
+        undoScramble: (text) => {
+            let newObj = new swapScramble(text);
+            return newObj.unscramble();
         }
     };
 
@@ -342,6 +333,12 @@ var controller = (function (cipherCtrl, UICtrl) {
 
             } else if (UIController.getInput().method === 'decrypt' && UIController.getInput().type === 'OTP') {
                 document.querySelector(DOM.encrypted).textContent = decryptOTP();
+            } else if (UIController.getInput().method === 'encrypt' && UIController.getInput().type === 'SCRAMBLE') {
+                document.querySelector(DOM.encrypted).textContent = encryptScramble();
+
+            } else if (UIController.getInput().method === 'decrypt' && UIController.getInput().type === 'SCRAMBLE') {
+                document.querySelector(DOM.encrypted).textContent = decryptScramble();
+
             }
         });
 
@@ -360,6 +357,12 @@ var controller = (function (cipherCtrl, UICtrl) {
                 } else if (UIController.getInput().method === 'decrypt' && UIController.getInput().type === 'OTP') {
                     document.querySelector(DOM.encrypted).textContent = decryptOTP();
                     
+                } else if (UIController.getInput().method === 'encrypt' && UIController.getInput().type === 'SCRAMBLE') {
+                    document.querySelector(DOM.encrypted).textContent = encryptScramble();
+
+                } else if (UIController.getInput().method === 'decrypt' && UIController.getInput().type === 'SCRAMBLE') {
+                    document.querySelector(DOM.encrypted).textContent = decryptScramble();
+
                 }
             }
         });
@@ -385,16 +388,20 @@ var controller = (function (cipherCtrl, UICtrl) {
         seed = parseInt(UIController.getInput().codeword);
         return cipherController.undoOTP(text, seed);
     }
-
-
+    let encryptScramble = () => {
+        text = UIController.getInput().text;
+        return cipherController.doScramble(text);
+    }
+    let decryptScramble = () => {
+        text = UIController.getInput().text;
+        return cipherController.undoScramble(text);
+    }
 
     return {
         init: () => {
             setupEventListeners();
         }
     }
-
-
 })(cipherController, UIController);
 
 controller.init();
@@ -410,13 +417,7 @@ controller.init();
 // let encodedOTP = cipherController.doOTP('{{ Hello World! }}', 10);
 // console.log(cipherController.undoOTP(encodedOTP, 10));
 
-// console.log(cipherController.doScramble('WORLD'));
-
-// let str = "hello";
-
-//    let newstr = str.replaceAt(2,'8');
-
-//     console.log(newstr);
-
+// let encodedScramble = cipherController.doScramble('SADWORLD');
+// console.log(cipherController.undoScramble(encodedScramble));
 
 
