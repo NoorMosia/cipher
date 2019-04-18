@@ -2,24 +2,16 @@
 /*   CIPHER */
 /* --------------------------------------------------------------------------------------------------------------- */
 
+// HELPERS
 function srand(seed) {
     var x = Math.sin(seed++);
     return Math.floor( (x - Math.floor(x)) * 1000);
 }
 
-String.prototype.replaceAt = function(index, replacement) {
-    return this.substr(0, index) + replacement + this.substr(index + replacement.length);
-}
 
-String.prototype.astring = function(string)
-{
-    return this.substr(0, replacement.length);
-}
+let cipherController = (function () {
 
         // -------------------------SUBSTITUTION----------------------------------------------------------------//
-
-let cipherController = (function() {
-        
     class substitution {        //vigenere and OTP will inherit from here
         constructor(){}
 
@@ -46,6 +38,7 @@ let cipherController = (function() {
 
     // -------------------------VIGENERE----------------------------------------------------------------//
     class vigenere extends substitution {
+
         constructor(text, codeword){
             super();
             this.codeword = codeword;
@@ -70,7 +63,11 @@ let cipherController = (function() {
 
             let n = shift + char.charCodeAt(0);
 
-            if (n > 126) {
+            if (char.charCodeAt(0) == 10)
+            {
+                n = 9;
+            }
+            else if (n > 126) {
                 n = n - 126 + 31;
             }
 
@@ -88,7 +85,12 @@ let cipherController = (function() {
 
             let n = char.charCodeAt(0) - shift;
 
-            if (n < 32) {
+            if (char.charCodeAt(0) == 9)
+            {
+                n = 10;
+            }
+            else if (n < 32) 
+            {
                 n += 126 - 31;
             }
 
@@ -114,7 +116,10 @@ let cipherController = (function() {
             let shift = (srand(this.seed) % (94 - 1 + 1)) + 1;
             let n = shift + char.charCodeAt(0);
 
-            if (n > 126) {
+            if (char.charCodeAt(0) == 10) {
+                n = 9;
+            }
+            else if (n > 126) {
                 n = n - 126 + 31;
             }
             return String.fromCharCode(n);
@@ -125,7 +130,10 @@ let cipherController = (function() {
 
             let n = char.charCodeAt(0) - shift;
 
-            if (n < 32) {
+            if (char.charCodeAt(0) == 9) {
+                n = 10;
+            }
+            else if (n < 32) {
                 n += 126 - 31;
             }
 
@@ -190,7 +198,7 @@ let cipherController = (function() {
     class swapScramble extends transposition {
         constructor(text) {
             super();
-            this.text = text;
+            this.text = text.trim();
         }
 
         scramble()
@@ -230,8 +238,6 @@ let cipherController = (function() {
 
             return newText;
         }
-
-        // -------------------------SWAPSCRAMBLE----------------------------------------------------------------//
 
         unscramble(text)
         {
@@ -280,8 +286,10 @@ var UIController = (function () {
         codeword: '.codeword',
         type: '.type',
         button: '.button',
-        text: '.text',
-        encrypted: '.encrypted'
+        text: '.mytext',
+        encrypted: '.encrypted',
+        userText: '.mytext',
+        input: 'input'
     };
 
     var nodeListForEach = function (list, callback) {
@@ -297,7 +305,7 @@ var UIController = (function () {
 
         getInput: function () {
             return {
-                method: document.querySelector(DOMstrings.method).value, // 
+                method: document.querySelector(DOMstrings.method).value, 
                 codeword: document.querySelector(DOMstrings.codeword).value,
                 type: document.querySelector(DOMstrings.type).value,
                 text: document.querySelector(DOMstrings.text).value,
@@ -314,37 +322,119 @@ var UIController = (function () {
 
 var controller = (function (cipherCtrl, UICtrl) {
 
-    var setupEventListeners = function () {
-        var DOM = UICtrl.getDOMStrings();
+    let encryptVigenere = () => {
+        text = UIController.getInput().text;
+        codeword = UIController.getInput().codeword;
+        if (codeword < 1) {
+            alert("CODEWORD PLEASE");
+            return;
+        }
+        return cipherController.doVigenere(text, codeword);
+    }
+    let decryptVigenere = () => {
+        text = UIController.getInput().text;
+        codeword = UIController.getInput().codeword;
+        if (codeword < 1) {
+            alert("CODEWORD PLEASE");
+            return;
+        }
+        return cipherController.undoVigenere(text, codeword);
+    }
+    let encryptOTP = () => {
+        text = UIController.getInput().text;
+        seed = parseInt(UIController.getInput().codeword);
+        if (seed < 1) {
+            alert("NUMBER PLEASE");
+            return;
+        }
+        return cipherController.doOTP(text, seed);
+    }
+    let decryptOTP = () => {
+        let text = UIController.getInput().text;
+        let seed = parseInt(UIController.getInput().codeword);
+        if (seed < 1) {
+            alert("NUMBER PLEASE");
+            return;
+        }
+        console.log(seed);
+        return cipherController.undoOTP(text, seed);
+    }
+    let encryptScramble = () => {
+        text = UIController.getInput().text;
+        return cipherController.doScramble(text);
+    }
+    let decryptScramble = () => {
+        text = UIController.getInput().text;
+        return cipherController.undoScramble(text);
+    }
 
-        document.querySelector('option').addEventListener('mousedown', () => {
-            console.log("yebo");
+    var setupEventListeners = function () {
+        var DOM             = UICtrl.getDOMStrings();
+
+        let typeenc         = document.querySelector(DOM.type);
+        let inputField      = document.querySelector(DOM.input);
+
+        let encryptedText   = document.querySelector(DOM.encrypted);
+        let userText        = document.querySelector(DOM.userText);
+
+        let btn_copy        = document.querySelector(".cpy");
+        let btn_clear       = document.querySelector(".clear");
+
+        //listener to copy text
+        btn_copy.addEventListener('click', () => {
+            encryptedText.select();
+            document.execCommand("copy");
         });
 
+        //listener to clear text
+        btn_clear.addEventListener('click', () => {
+            userText.value = '';
+        });
+
+        //listeners for encryption type
+        typeenc.addEventListener("click", function () {
+
+            if(typeenc.value == 'SCRAMBLE') {
+                inputField.style.display = "none";
+
+            } else if (typeenc.value == 'OTP') {
+                inputField.style.display = "inline";
+                inputField.type = "number";
+                inputField.placeholder = "enter number";
+
+            } else if (typeenc.value == 'vigenere') {
+                inputField.style.display = "inline";
+                inputField.type = "text";
+                inputField.placeholder = "codeword";
+            }
+        })
+
+        //listeners for encrypting on click
         document.querySelector(DOM.button).addEventListener('click', () => {
             if(UIController.getInput().method === 'encrypt' && UIController.getInput().type === 'vigenere') {
-                document.querySelector(DOM.encrypted).textContent = encryptVigenere();
+                encryptedText.textContent = encryptVigenere();
 
             } else if (UIController.getInput().method === 'decrypt' && UIController.getInput().type === 'vigenere') {
-                document.querySelector(DOM.encrypted).textContent = decryptVigenere();
+                encryptedText.textContent = decryptVigenere();
 
             } else if (UIController.getInput().method === 'encrypt' && UIController.getInput().type === 'OTP') {
-                document.querySelector(DOM.encrypted).textContent = encryptOTP();
+                encryptedText.textContent = encryptOTP();
 
             } else if (UIController.getInput().method === 'decrypt' && UIController.getInput().type === 'OTP') {
-                document.querySelector(DOM.encrypted).textContent = decryptOTP();
+                encryptedText.textContent = decryptOTP();
+
             } else if (UIController.getInput().method === 'encrypt' && UIController.getInput().type === 'SCRAMBLE') {
-                document.querySelector(DOM.encrypted).textContent = encryptScramble();
+                encryptedText.textContent = encryptScramble();
 
             } else if (UIController.getInput().method === 'decrypt' && UIController.getInput().type === 'SCRAMBLE') {
-                document.querySelector(DOM.encrypted).textContent = decryptScramble();
-
+                encryptedText.textContent = decryptScramble();
+                
             }
         });
 
+        //listeners for encrypting on pressing enter key
         document.addEventListener('keypress', (event) => {
             if (event.keyCode === 13 || event.which === 13) {
-                console.log("hallo");
                 if(UIController.getInput().method === 'encrypt' && UIController.getInput().type === 'vigenere') {
                 document.querySelector(DOM.encrypted).textContent = encryptVigenere();
 
@@ -368,35 +458,6 @@ var controller = (function (cipherCtrl, UICtrl) {
         });
     };
 
-    let encryptVigenere = () => {
-        text = UIController.getInput().text;
-        codeword = UIController.getInput().codeword;
-        return cipherController.doVigenere(text, codeword);
-    }
-    let decryptVigenere = () => {
-        text = UIController.getInput().text;
-        codeword = UIController.getInput().codeword;
-        return cipherController.undoVigenere(text, codeword);
-    }
-    let encryptOTP = () => {
-        text = UIController.getInput().text;
-        seed = parseInt(UIController.getInput().codeword);
-        return cipherController.doOTP(text, seed);
-    }
-    let decryptOTP = () => {
-        text = UIController.getInput().text;
-        seed = parseInt(UIController.getInput().codeword);
-        return cipherController.undoOTP(text, seed);
-    }
-    let encryptScramble = () => {
-        text = UIController.getInput().text;
-        return cipherController.doScramble(text);
-    }
-    let decryptScramble = () => {
-        text = UIController.getInput().text;
-        return cipherController.undoScramble(text);
-    }
-
     return {
         init: () => {
             setupEventListeners();
@@ -407,17 +468,6 @@ var controller = (function (cipherCtrl, UICtrl) {
 controller.init();
 
 /* ---------------------------------------------------------------------------------------------------------------- */
-/*   TEST */
+/*   TESTS */
 /* --------------------------------------------------------------------------------------------------------------- */
-
-
-// let encoded = cipherController.doVigenere('{{ Hello World! }}', 'BANANA');
-// console.log(cipherController.undoVigenere(encoded, 'BANANA'));
-
-// let encodedOTP = cipherController.doOTP('{{ Hello World! }}', 10);
-// console.log(cipherController.undoOTP(encodedOTP, 10));
-
-// let encodedScramble = cipherController.doScramble('SADWORLD');
-// console.log(cipherController.undoScramble(encodedScramble));
-
 
