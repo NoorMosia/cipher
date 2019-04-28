@@ -134,4 +134,18 @@ textarea,
     color: rgb(115, 115, 250);
 }
 
+
+footer {
+    height: 5rem;
+    text-align: center;
+    background-color: rgba(27, 27, 27, 0.849);
+    color: rgb(134, 134, 134);
+    padding: 2rem;
+    margin-top: 4rem;
+    font-size: .8rem;
+}
+
+
+
+
 @media only screen and (max-width:914px){    .section__text {    width: 94%;    }       }
