@@ -16,8 +16,7 @@ let cipherController = (function () {
         encode()
         {
             let newText = "";
-            for (let i = 0; i < this.text.length ; i++)
-            {
+            for (let i = 0; i < this.text.length ; i++) {
                 newText += this.encodeChar(this.text[i]);
             }
 
@@ -36,7 +35,6 @@ let cipherController = (function () {
 
     // -------------------------VIGENERE----------------------------------------------------------------//
     class vigenere extends substitution {
-
         constructor(text, codeword){
             super();
             this.codeword = codeword;
@@ -332,7 +330,7 @@ var controller = (function (cipherCtrl, UICtrl) {
     let decryptVigenere = () => {
         text = UIController.getInput().text;
         codeword = UIController.getInput().codeword;
-        if (codeword < 1) {
+        if (!codeword) {
             alert("CODEWORD PLEASE");
             return;
         }
@@ -354,7 +352,6 @@ var controller = (function (cipherCtrl, UICtrl) {
             alert("NUMBER PLEASE");
             return;
         }
-        console.log(seed);
         return cipherController.undoOTP(text, seed);
     }
     let encryptScramble = () => {
@@ -383,6 +380,7 @@ var controller = (function (cipherCtrl, UICtrl) {
         btn_copy.addEventListener('click', () => {
             encryptedText.select();
             document.execCommand("copy");
+            $('html, body').animate({ scrollTop: $(".section__form").offset().top }, 500);
         });
 
         //listener to clear text
@@ -414,6 +412,8 @@ var controller = (function (cipherCtrl, UICtrl) {
 
         //listeners for encrypting on click
         document.querySelector(DOM.button).addEventListener('click', () => {
+            $('html, body').animate({ scrollTop: $('.clear-encrypt-text').offset().top }, 500);
+
             if(UIController.getInput().method === 'encrypt' && UIController.getInput().type === 'vigenere') {
                 encryptedText.value = encryptVigenere();
 

@@ -93,7 +93,6 @@ input[type=text] {    width: 8rem;     }
 .button i {    margin-right: .3rem;     }
 
 .button:hover {    box-shadow: 4px 6px 8px rgb(124, 124, 124);      }
-
 .button:active {    box-shadow: 1px 1px 2px rgb(46, 46, 46);        }
 
 .section__text {
@@ -122,7 +121,7 @@ textarea,
     text-align: justify;
 }
 
- .cpy,
+.cpy,
 .clear-mytext,
 .clear-encrypt-text {
     margin: 0 .5rem 3px 0;
@@ -134,7 +133,6 @@ textarea,
 .cpy {    background-color: rgb(185, 250, 255);     }
 
 /* footer shandiz */
-
 #page-container {
     position: relative;
     min-height: 100vh;
@@ -149,9 +147,24 @@ textarea,
     height: 15rem;
     text-align: center;
     background-color: rgba(27, 27, 27, 0.849);
-    color: rgb(134, 134, 134);
+    color: #868686;
     padding: 3rem 2%;
     font-size: .7rem;
 }
 
 @media only screen and (max-width:914px){    .section__text {    width: 94%;    }       }
+
+@media only screen and (max-width: 450px){ 
+    select {
+        width: 45%;
+        margin: 2%;
+    }   
+    
+    .button {    width: 25%;  margin-left: 2%;   }
+
+    input[type=text] {
+        width: 65%;
+        margin: 2%;
+    }
+}
+
