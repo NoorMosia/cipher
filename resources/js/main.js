@@ -5,12 +5,10 @@
 // HELPERS
 function srand(seed) {
     var x = Math.sin(seed++);
-    return Math.floor( (x - Math.floor(x)) * 1000);
+    return Math.floor( (x - Math.floor(x)) * 19834);
 }
 
-
 let cipherController = (function () {
-
         // -------------------------SUBSTITUTION----------------------------------------------------------------//
     class substitution {        //vigenere and OTP will inherit from here
         constructor(){}
@@ -378,7 +376,8 @@ var controller = (function (cipherCtrl, UICtrl) {
         let userText        = document.querySelector(DOM.userText);
 
         let btn_copy        = document.querySelector(".cpy");
-        let btn_clear       = document.querySelector(".clear");
+        let btn_clear_1     = document.querySelector(".clear-mytext");
+        let btn_clear_2     = document.querySelector(".clear-encrypt-text");
 
         //listener to copy text
         btn_copy.addEventListener('click', () => {
@@ -387,9 +386,13 @@ var controller = (function (cipherCtrl, UICtrl) {
         });
 
         //listener to clear text
-        btn_clear.addEventListener('click', () => {
+        btn_clear_1.addEventListener('click', () => {
             userText.value = '';
         });
+        btn_clear_2.addEventListener('click', () => {
+            encryptedText.value = '';
+        });
+
 
         //listeners for encryption type
         typeenc.addEventListener("click", function () {
@@ -412,22 +415,22 @@ var controller = (function (cipherCtrl, UICtrl) {
         //listeners for encrypting on click
         document.querySelector(DOM.button).addEventListener('click', () => {
             if(UIController.getInput().method === 'encrypt' && UIController.getInput().type === 'vigenere') {
-                encryptedText.textContent = encryptVigenere();
+                encryptedText.value = encryptVigenere();
 
             } else if (UIController.getInput().method === 'decrypt' && UIController.getInput().type === 'vigenere') {
-                encryptedText.textContent = decryptVigenere();
+                encryptedText.value = decryptVigenere();
 
             } else if (UIController.getInput().method === 'encrypt' && UIController.getInput().type === 'OTP') {
-                encryptedText.textContent = encryptOTP();
+                encryptedText.value = encryptOTP();
 
             } else if (UIController.getInput().method === 'decrypt' && UIController.getInput().type === 'OTP') {
-                encryptedText.textContent = decryptOTP();
+                encryptedText.value = decryptOTP();
 
             } else if (UIController.getInput().method === 'encrypt' && UIController.getInput().type === 'SCRAMBLE') {
-                encryptedText.textContent = encryptScramble();
+                encryptedText.value = encryptScramble();
 
             } else if (UIController.getInput().method === 'decrypt' && UIController.getInput().type === 'SCRAMBLE') {
-                encryptedText.textContent = decryptScramble();
+                encryptedText.value = decryptScramble();
                 
             }
         });
@@ -436,22 +439,22 @@ var controller = (function (cipherCtrl, UICtrl) {
         document.addEventListener('keypress', (event) => {
             if (event.keyCode === 13 || event.which === 13) {
                 if(UIController.getInput().method === 'encrypt' && UIController.getInput().type === 'vigenere') {
-                document.querySelector(DOM.encrypted).textContent = encryptVigenere();
+                document.querySelector(DOM.encrypted).value = encryptVigenere();
 
                 } else if (UIController.getInput().method === 'decrypt' && UIController.getInput().type === 'vigenere') {
-                    document.querySelector(DOM.encrypted).textContent = decryptVigenere();
+                    document.querySelector(DOM.encrypted).value = decryptVigenere();
 
                 } else if (UIController.getInput().method === 'encrypt' && UIController.getInput().type === 'OTP') {
-                    document.querySelector(DOM.encrypted).textContent = encryptOTP();
+                    document.querySelector(DOM.encrypted).value = encryptOTP();
 
                 } else if (UIController.getInput().method === 'decrypt' && UIController.getInput().type === 'OTP') {
-                    document.querySelector(DOM.encrypted).textContent = decryptOTP();
+                    document.querySelector(DOM.encrypted).value = decryptOTP();
                     
                 } else if (UIController.getInput().method === 'encrypt' && UIController.getInput().type === 'SCRAMBLE') {
-                    document.querySelector(DOM.encrypted).textContent = encryptScramble();
+                    document.querySelector(DOM.encrypted).value = encryptScramble();
 
                 } else if (UIController.getInput().method === 'decrypt' && UIController.getInput().type === 'SCRAMBLE') {
-                    document.querySelector(DOM.encrypted).textContent = decryptScramble();
+                    document.querySelector(DOM.encrypted).value = decryptScramble();
 
                 }
             }
@@ -470,4 +473,3 @@ controller.init();
 /* ---------------------------------------------------------------------------------------------------------------- */
 /*   TESTS */
 /* --------------------------------------------------------------------------------------------------------------- */
-

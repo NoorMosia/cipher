@@ -1,7 +1,6 @@
 /* ---------------------------------------------------------------------------------------------------------------- */
                                             /*   BASIC SETUP */
 /* --------------------------------------------------------------------------------------------------------------- */
-
 *,
 *::before,
 *::after {
@@ -13,14 +12,13 @@
 *:focus {   outline: none;  }
 
 html {
-    background-color: rgb(156, 156, 156);
-    color: rgba(27, 27, 27, 0.849);
+    background-color: rgb(255, 255, 255);
+    color: rgba(48, 48, 48, 0.849);
     font-weight: 300;
     font-family: serif;
     font-size: 18px;
     text-rendering: optimizeLegibility;
 }
-
 /* ---------------------------------------------------------------------------------------------------------------- */
                                             /*   HEADER */
 /* --------------------------------------------------------------------------------------------------------------- */
@@ -38,7 +36,7 @@ html {
 
 h1::after {
     display: block;
-    background-color: rgba(255, 255, 255, 0.418);;
+    background-color: rgba(0, 119, 255, 0.418);
     height: 2px;
     content: " ";
     width: 5rem;
@@ -51,7 +49,7 @@ h1::after {
 /* --------------------------------------------------------------------------------------------------------------- */
 
 .section__form {
-    background-color: rgba(250, 250, 250, 0.774);
+    background-color: rgb(238, 238, 238);
     min-height: 3rem;
     text-align: center;
     margin-bottom: 1rem;
@@ -67,30 +65,36 @@ select,
 input,
 button {
     color: rgb(56, 56, 56);
-    background-color: rgba(233, 233, 233, 0.808);
+    background-color: rgba(255, 255, 255, 0.808);
     border-radius: .2rem;
     padding: .3rem;
     margin: .5rem;
     font-size: .9rem;
-    border: 1px solid rgb(158, 158, 158);
+    border: 0;
+    box-shadow: 1px 2px 4px rgb(204, 204, 204);
 }
 
-input[type=text] {    width: 10rem;     }
+input[type=text] {    width: 8rem;     }
 
 .button {
-    background: rgb(185, 185, 185);
-    color: rgb(20, 20, 20);
+    background: rgba(0, 195, 255, 0.705);
+    color: rgb(32, 32, 32);
     border: 0;
-    border-radius: 150px;
-    padding: .4rem 1rem;
+    text-transform: uppercase;
+    border-radius: 2px;
+    padding: .4rem .6rem;
+    width: 5.2rem;
+    font-size: .7rem;
     cursor: pointer;
     transition: .2s ease-out;
+    box-shadow: 2px 4px 4px rgb(204, 204, 204);
 }
 
-.button:hover {
-    background-color: rgb(53, 53, 53);
-    color: rgb(231, 231, 231);
-}
+.button i {    margin-right: .3rem;     }
+
+.button:hover {    box-shadow: 4px 6px 8px rgb(124, 124, 124);      }
+
+.button:active {    box-shadow: 1px 1px 2px rgb(46, 46, 46);        }
 
 .section__text {
     width: 50rem;
@@ -100,16 +104,17 @@ input[type=text] {    width: 10rem;     }
 textarea,
 .encrypted {
     display: block;
-    background-color: rgba(241, 241, 241, 0.74);
+    background-color: rgb(233, 233, 233);
     color: rgb(29, 29, 29);
     width: 100%;
     min-height: 10rem;
     border: 0;
     border-radius: 4px;
-    margin: 1rem auto;
+    margin: 2rem auto;
     padding: .5rem;
     font-size: 1rem;
     margin-top: 0;
+    box-shadow: 2px 3px 4px rgb(230, 230, 230);
 }
 
 .encrypted {
@@ -117,35 +122,36 @@ textarea,
     text-align: justify;
 }
 
-.cpy,
-.clear,
-.paste {
-    margin: 0;
+ .cpy,
+.clear-mytext,
+.clear-encrypt-text {
+    margin: 0 .5rem 3px 0;
     cursor: pointer;
-    margin-bottom: -1px;
-    text-transform: uppercase;
-    border: 0;
 }
 
-.cpy:hover,
-.clear:hover,
-.paste:hover {
-    background-color: rgba(255, 255, 255, 0.904);
-    color: rgb(115, 115, 250);
+.clear-mytext, .clear-encrypt-text {    background-color: rgb(255, 217, 217);       }
+
+.cpy {    background-color: rgb(185, 250, 255);     }
+
+/* footer shandiz */
+
+#page-container {
+    position: relative;
+    min-height: 100vh;
 }
 
+#content-wrap {    padding-bottom: 15rem;       }
 
-footer {
-    height: 5rem;
+#footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 15rem;
     text-align: center;
     background-color: rgba(27, 27, 27, 0.849);
     color: rgb(134, 134, 134);
-    padding: 2rem;
-    margin-top: 4rem;
-    font-size: .8rem;
+    padding: 3rem 2%;
+    font-size: .7rem;
 }
-
-
-
 
 @media only screen and (max-width:914px){    .section__text {    width: 94%;    }       }
