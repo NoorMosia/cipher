@@ -15,7 +15,7 @@ html {
     background-color: rgb(255, 255, 255);
     color: rgba(48, 48, 48, 0.849);
     font-weight: 300;
-    font-family: serif;
+    font-family: sans-serif;
     font-size: 18px;
     text-rendering: optimizeLegibility;
 }
@@ -152,6 +152,22 @@ textarea,
     font-size: .7rem;
 }
 
+.modal {
+    position: absolute;
+    text-transform: capitalize;
+    text-align: center;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: .5rem 1rem;
+    border-radius: 3px;
+    background-color: rgb(217, 64, 255);
+    color: #ffe2e2;
+    opacity: 0;
+    display: none;
+    transition: opacity .5s;
+}
+
 @media only screen and (max-width:914px){    .section__text {    width: 94%;    }       }
 
 @media only screen and (max-width: 450px){ 
@@ -160,11 +176,20 @@ textarea,
         margin: 2%;
     }   
     
-    .button {    width: 25%;  margin-left: 2%;   }
+    .button {    
+        width: 24%;  
+        margin-left: 2%;   
+    }
 
     input[type=text] {
-        width: 65%;
+        width: 64%;
         margin: 2%;
+    }
+
+    .cpy,
+    .clear-mytext,
+    .clear-encrypt-text {
+        font-size: .5rem;
     }
 }
 
