@@ -5,7 +5,7 @@ function srand(seed) {
 }
 
 let cipherController = (function () {
-    class substitution {        //vigenere and OTP will inherit from here
+    class substitution {
         constructor(){}
 
         encode()
@@ -219,8 +219,7 @@ let cipherController = (function () {
 /* --------------------------------------------------------------------------------------------------------------- */
 
 var UIController = (function () {
-
-    var DOMstrings = {
+    const DOMstrings = {
         method: '.method',
         codeword: '.codeword',
         type: '.type',
@@ -236,8 +235,8 @@ var UIController = (function () {
 
     };
 
-    var nodeListForEach = function (list, callback) {
-        for (var i = 0; i < list.length; i++) {
+    const nodeListForEach = function (list, callback) {
+        for (let i = 0; i < list.length; i++) {
             callback(list[i], i);
         }
     };
