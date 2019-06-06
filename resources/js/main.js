@@ -358,7 +358,7 @@ var controller = (function (cipherCtrl, UICtrl) {
         });
 
         //listeners for encryption type
-        typeenc.addEventListener("click", function () {
+        typeenc.addEventListener('change', function () {
 
             if(typeenc.value == 'SCRAMBLE') {
                 inputField.style.display = "none";
