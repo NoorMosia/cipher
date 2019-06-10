@@ -4,7 +4,7 @@ function srand(seed) {
     return Math.floor( (x - Math.floor(x)) * 19834);
 }
 
-let cipherController = (function () {
+const cipherController = (function () {
     class substitution {
         constructor(){}
 
@@ -218,7 +218,7 @@ let cipherController = (function () {
 /*   UI */
 /* --------------------------------------------------------------------------------------------------------------- */
 
-var UIController = (function () {
+const UIController = (function () {
     const DOMstrings = {
         method: '.method',
         codeword: '.codeword',
@@ -263,7 +263,7 @@ var UIController = (function () {
 /*   CONTROLLER */
 /* --------------------------------------------------------------------------------------------------------------- */
 
-var controller = (function (cipherCtrl, UICtrl) {
+const controller = (function (cipherCtrl, UICtrl) {
     const DOM = UICtrl.getDOMStrings();
 
     const typeenc = document.querySelector(DOM.type);
@@ -366,7 +366,7 @@ var controller = (function (cipherCtrl, UICtrl) {
             } else if (typeenc.value == 'OTP') {
                 inputField.style.display = "inline";
                 inputField.type = "number";
-                inputField.placeholder = "enter number";
+                inputField.placeholder = "number";
 
             } else if (typeenc.value == 'vigenere') {
                 inputField.style.display = "inline";
@@ -377,6 +377,7 @@ var controller = (function (cipherCtrl, UICtrl) {
 
         //listeners for encrypting on click
         document.querySelector(DOM.button).addEventListener('click', () => {
+            userText.blur();
 
             if (UIController.getInput().method === 'encrypt' && UIController.getInput().type === 'vigenere') {
                 encryptedText.value = encryptVigenere();
@@ -400,29 +401,29 @@ var controller = (function (cipherCtrl, UICtrl) {
         });
 
         //listeners for encrypting on pressing enter key
-        document.addEventListener('keypress', (event) => {
-            if (event.keyCode === 13 || event.which === 13) {
-                if(UIController.getInput().method === 'encrypt' && UIController.getInput().type === 'vigenere') {
-                document.querySelector(DOM.encrypted).value = encryptVigenere();
+        // document.addEventListener('keypress', (event) => {
+        //     if (event.keyCode === 13 || event.which === 13) {
+        //         if(UIController.getInput().method === 'encrypt' && UIController.getInput().type === 'vigenere') {
+        //         document.querySelector(DOM.encrypted).value = encryptVigenere();
 
-                } else if (UIController.getInput().method === 'decrypt' && UIController.getInput().type === 'vigenere') {
-                    document.querySelector(DOM.encrypted).value = decryptVigenere();
+        //         } else if (UIController.getInput().method === 'decrypt' && UIController.getInput().type === 'vigenere') {
+        //             document.querySelector(DOM.encrypted).value = decryptVigenere();
 
-                } else if (UIController.getInput().method === 'encrypt' && UIController.getInput().type === 'OTP') {
-                    document.querySelector(DOM.encrypted).value = encryptOTP();
+        //         } else if (UIController.getInput().method === 'encrypt' && UIController.getInput().type === 'OTP') {
+        //             document.querySelector(DOM.encrypted).value = encryptOTP();
 
-                } else if (UIController.getInput().method === 'decrypt' && UIController.getInput().type === 'OTP') {
-                    document.querySelector(DOM.encrypted).value = decryptOTP();
+        //         } else if (UIController.getInput().method === 'decrypt' && UIController.getInput().type === 'OTP') {
+        //             document.querySelector(DOM.encrypted).value = decryptOTP();
                     
-                } else if (UIController.getInput().method === 'encrypt' && UIController.getInput().type === 'SCRAMBLE') {
-                    document.querySelector(DOM.encrypted).value = encryptScramble();
+        //         } else if (UIController.getInput().method === 'encrypt' && UIController.getInput().type === 'SCRAMBLE') {
+        //             document.querySelector(DOM.encrypted).value = encryptScramble();
 
-                } else if (UIController.getInput().method === 'decrypt' && UIController.getInput().type === 'SCRAMBLE') {
-                    document.querySelector(DOM.encrypted).value = decryptScramble();
+        //         } else if (UIController.getInput().method === 'decrypt' && UIController.getInput().type === 'SCRAMBLE') {
+        //             document.querySelector(DOM.encrypted).value = decryptScramble();
 
-                }
-            }
-        });
+        //         }
+        //     }
+        // });
     };
 
     return {

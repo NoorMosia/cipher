@@ -73,7 +73,8 @@ button {
     box-shadow: 1px 2px 4px rgb(204, 204, 204);
 }
 
-input[type=text] {    width: 8rem;     }
+input[type=text],
+input[type=number] {    width: 8rem;     }
 
 .button {
     background: rgba(0, 195, 255, 0.705);
@@ -180,7 +181,8 @@ textarea,
         margin-left: 2%;   
     }
 
-    input[type=text] {
+    input[type=text],
+    input[type=number] {
         width: 64%;
         margin: 2%;
     }
